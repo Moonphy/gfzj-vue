@@ -270,7 +270,7 @@
             if (this.audioHandler) {
               this.tochange(this.O.topic_voice_url, this.O.topic_name, this.O.record_time)
             } else { // 初始货
-              if (!this.askContent) {
+              if (this.askContent) {
                 this.asking = true
                 setTimeout(() => {
                   window['scrollTo'](0, document.getElementById('askAreaText').offsetTop)
@@ -334,7 +334,7 @@
       },
       playMusic (isStop) {
         if (this.audioHandler === '') return
-        if (this.isOpenByWeixin() === false) return
+        // if (this.isOpenByWeixin() === false) return
         if (this.playing || isStop) {
           this.audioHandler.pause()
           this.playing = false
@@ -411,7 +411,7 @@
       },
 
       submitAsk () {
-        if (this.isOpenByWeixin() === false) return
+        if (this.isOpenByWeixin('「微信扫一扫，继续下一步」') === false) return
         if (this.askContent === '') {
           this.setPrompt('请填写提问内容！')
           return
@@ -475,7 +475,7 @@
         }, 200)
       },
       follow () {
-        if (this.isOpenByWeixin() === false || this.following === true || this.O.fans_type === 1) return
+        if (this.isOpenByWeixin('「微信扫一扫，继续下一步」') === false || this.following === true || this.O.fans_type === 1) return
         this.following = true
         api.common.getData(this.apiInterface.make_follow, {
           uid: this.O.specialist_uid

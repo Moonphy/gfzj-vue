@@ -37,6 +37,9 @@
       <a href="" @click.prevent="goback()" class="icon icon-return"></a>
       <h1>二维码</h1>
     </header>
+    <header class="header" v-if="bodycs === 'login-page'">
+      <a href="" @click.prevent="goback()" class="icon icon-return"></a>
+    </header>
     <header class="header" v-if="bodycs === 'edit-page'">
       <a href="" @click.prevent="goback()" class="icon icon-return"></a>
       <h1>编辑</h1>
@@ -64,7 +67,7 @@
       <a title="专辑" class="nav-album" v-link="{path:'/album'}">
         <i class="icon icon-album"></i><span>专辑</span>
       </a>
-      <a title="我的" class="nav-home" v-link="{path:'/home'}">
+      <a title="我的" class="nav-home" v-link="{path:myhome}">
         <i class="icon icon-home"></i><span>我的</span>
       </a>
     </nav>
@@ -167,7 +170,8 @@
         nowurl: this.$route.path,
         fromurl: '#',
         wxpopup: false,
-        wxpopupText: '暂时不能录音，请扫描二维码进入再尝试'
+        wxpopupText: '暂时不能录音，请扫描二维码进入再尝试',
+        myhome: '/home'
       }
     },
     computed: {
@@ -202,6 +206,7 @@
         this.wxpopup = obj.wxpopup
         this.wxpopupText = obj.wxpopupText
       })
+      this.isWeixin()
     },
 
     methods: {
@@ -220,6 +225,14 @@
           wxpopup: true,
           wxpopupText: '长按图片，保存到相册。<br><img src="' + url + '" alt="二维码">'
         })
+      },
+      isWeixin () {
+        var ua = navigator.userAgent.toLowerCase().match(/MicroMessenger/i)
+        if (ua && ua.length && ua[0] === 'micromessenger') {
+          this.myhome = '/home'
+        } else {
+          this.myhome = '/login'
+        }
       }
     }
   }

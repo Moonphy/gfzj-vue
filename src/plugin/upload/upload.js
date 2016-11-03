@@ -125,6 +125,7 @@ class UploadCtrl {
         xhr.open('POST', self.url + '&_post_type=ajax', true)
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpHequest')
         xhr.setRequestHeader('content-length', file.size)
+        // xhr.setRequestHeader('Content-Type', 'text/xml; charset=utf-8')
         fd.append(self.fileObject || 'Filedata', file)
         self.beforeUpload && self.beforeUpload(fd)
         xhr.send(fd)

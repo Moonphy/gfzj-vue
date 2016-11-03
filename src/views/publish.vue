@@ -82,7 +82,7 @@
           </div>
       </form>
       <div class="tc pl20 pr20 pb40">
-          <input type="button" value="发布方法" class="btn btn-primary btn-block" v-tap="publishWay()">
+          <input type="button" value="发布方法" class="btn btn-primary btn-block" @click.prevent="publishWay()">
       </div>
   </div>
 </template>

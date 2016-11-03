@@ -5,13 +5,13 @@
       <li v-for="item in items" class="q-item">
         <div class="ui-avatar fl">
           <img :src="item.avatar_file" alt="alt"/></div>
-        <div class="item-content"><strong class="font-pink">{{item.user_name}}</strong>
+        <div class="item-content" @click="toreplyed(item)"><strong class="font-pink">{{item.user_name}}</strong>
           <p>{{item.question_name}}</p>
           <div class="q-row" v-if="item.answer_id">
             <div class="ui-avatar fl"><img :src="item.specialist.specialist_avatar_file" alt="alt"/></div>
             <div class="q-audio-wrap">
               <div class="triangle-left"></div>
-              <div @click="qplay(item, $index)" :class="['q-audio', playingIndex === $index ? 'q-play' : '']" >
+              <div @click.stop="qplay(item, $index)" :class="['q-audio', playingIndex === $index ? 'q-play' : '']" >
                 <span class="q-line-1"></span>
                 <span class="q-line-2"></span>
                 <span class="q-line-3"></span>
@@ -68,6 +68,9 @@
       this.qlistid = this.componentId
     },
     methods: {
+      toreplyed (item) {
+        this.$route.router.go({path: '/replyed?id=' + item.question_id})
+      },
       qplay (item, index) {
         var self = this
         var audio

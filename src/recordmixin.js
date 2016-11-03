@@ -84,6 +84,11 @@ export var recordMixins = {
       //   return
       // }
       // this.recordState = '停止录音'
+      this.clearRecord()
+      this.startRecord()
+    },
+
+    recordDuration () {
       this.startTamp = this.getTime()
       clearInterval(this.recordTimer)
       this.duration = '00:01'
@@ -124,8 +129,6 @@ export var recordMixins = {
         }
         self.second += 1
       }, 1000)
-      this.clearRecord()
-      this.startRecord()
     },
 
     clearRecord () {
@@ -136,18 +139,32 @@ export var recordMixins = {
     },
     startRecord () {
       // this.way.title = 'startRecord'
+      let self = this
       if (this.recordIds.length < this.maxRecord) {
-        this.recording = true
-        window['wx'].startRecord()
+        window['wx'].startRecord({
+          success () {
+            if (self.recordIds.length === 0) {
+              self.recordDuration()
+            }
+            self.recording = true
+            self.setTime = setTimeout(() => {
+              self.stopRecord(true)
+            }, self.timer)
+          },
+          cancel () { // 用户拒绝授权录音
+            console.log('用户拒绝授权录音')
+          },
+          fail (res) {
+            if (window.location.href.indexOf('dev') > -1) {
+              window.alert(JSON.stringify(res))
+            }
+          }
+        })
         // btn_recording.text('').addClass('btn-recording');
         // btn_stop.display(1);
         // btn_comment.display(0)
         // clearTimeout(this.setTime)
       }
-      let self = this
-      this.setTime = setTimeout(() => {
-        self.stopRecord(true)
-      }, this.timer)
     },
 
     stopRecord (auto) {

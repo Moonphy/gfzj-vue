@@ -100,8 +100,13 @@ export var globalMixins = {
           }, '', (err) => {
             if (!err && self.wxinited !== 'error') {
               self.setwxinit(true)
-              // self.addNotice({type: 'success', content: '微信注册成功!'})
+              if (window.location.href.indexOf('dev') > -1) {
+                self.addNotice({type: 'success', content: '微信注册成功!'})
+              }
             } else {
+              if (window.location.href.indexOf('dev') > -1) {
+                self.addNotice({type: 'error', content: '微信注册失败!'})
+              }
               self.setwxinit('error')
             }
           })
@@ -403,20 +408,21 @@ export var globalMixins = {
         this.setState(false)
       })
     },
-    showPageErweima (url) {
+    showPageErweima (url, msg) {
       url = 'http://qr.liantu.com/api.php?text=' + encodeURIComponent(url || window.location.href)
+      msg = msg || '长按图片，保存到相册。'
       this.$dispatch('wxError', {
         wxpopup: true,
-        wxpopupText: '长按图片，保存到相册。<br><img src="' + url + '" alt="二维码">'
+        wxpopupText: msg + '<br><img src="' + url + '" alt="二维码">'
       })
     },
-    isOpenByWeixin () {
+    isOpenByWeixin (msg) {
       var ua = navigator.userAgent.toLowerCase().match(/MicroMessenger/i)
       var weixin = false
       if (ua && ua.length && ua[0] === 'micromessenger') {
         weixin = true
       } else {
-        this.showPageErweima()
+        this.showPageErweima('', msg)
       }
       return weixin
     }

@@ -160,6 +160,13 @@ let configRouter = (router) => {
           resolve(require('./views/titlelist'))
         }, 'titlelist')
       }
+    },
+    '/login': {
+      component (resolve) {
+        require.ensure([], (require) => {
+          resolve(require('./views/login'))
+        }, 'login')
+      }
     }
 
     // '/expert': {

@@ -184,6 +184,7 @@
           self.currentUrl = res.answer_url
           if (self.machineType !== 'andriod') {
         // self.currentUrl = 'http://i.dev.gaofen.com/uploads/specialist/voice/20160923/4c7be528d4393ab50110e030c68ff55d.mp3'
+            self.question.heat_num = self.question.heat_num + 1
             setTimeout(() => {
               self.playing = true
               self.setState(false)
@@ -194,7 +195,7 @@
         })
       },
       follow () {
-        if (this.isOpenByWeixin() === false || this.following === true || this.question.fans_type === 1) return
+        if (this.isOpenByWeixin('「微信扫一扫，继续下一步」') === false || this.following === true || this.question.fans_type === 1) return
         this.following = true
         api.common.getData(this.apiInterface.make_follow, {
           uid: this.question.specialist_uid
