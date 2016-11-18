@@ -167,6 +167,20 @@ let configRouter = (router) => {
           resolve(require('./views/login'))
         }, 'login')
       }
+    },
+    '/attention': {
+      component (resolve) {
+        require.ensure([], (require) => {
+          resolve(require('./views/attention'))
+        }, 'attention')
+      }
+    },
+    '/newssetting': {
+      component (resolve) {
+        require.ensure([], (require) => {
+          resolve(require('./views/newssetting'))
+        }, 'newssetting')
+      }
     }
 
     // '/expert': {

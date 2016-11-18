@@ -11,6 +11,10 @@
           <i class="icon icon-edit"></i>
           <div class="font-grey">编辑</div>
         </a>
+        <a class="btn-edit" v-link="{path:settingUrl}" v-if="settingUrl">
+          <i class="icon icon-attention"></i>
+          <div class="font-grey">设置</div>
+        </a>
         <a class="btn-edit" v-link="{path:'/erweima'}">
           <i class="icon icon-erweima"></i>
           <div class="font-grey">二维码</div>
@@ -282,6 +286,8 @@
     },
     data () {
       return {
+        // settingUrl: '/newssetting', // 设置消息页面
+        settingUrl: '',
         listLoading: false,
         voiceAudio: '',
         expertshow: false,
@@ -319,10 +325,17 @@
       }
     },
     ready () {
-      // this.wxsign()
-      this.getUser()
-      this.getEList(1, 1)
       let self = this
+      this.getUser('', '', (info) => {
+        // 获取用户是否已经关注豆计划
+        if (info.subscribe === 0) {
+          self.settingUrl = '/attention'
+        } else {
+          self.settingUrl = '/newssetting' // 关注豆计划
+        }
+      })
+      this.getEList(1, 1)
+
       this.initPage({
         getPage: () => {
           if (self.tab === 1) {

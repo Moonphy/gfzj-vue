@@ -139,6 +139,7 @@ export var recordMixins = {
     },
     startRecord () {
       // this.way.title = 'startRecord'
+      this.recording = true
       let self = this
       if (this.recordIds.length < this.maxRecord) {
         window['wx'].startRecord({
@@ -153,8 +154,11 @@ export var recordMixins = {
           },
           cancel () { // 用户拒绝授权录音
             console.log('用户拒绝授权录音')
+            self.recording = false
           },
           fail (res) {
+            self.recording = false
+            self.addNotice({type: 'error', content: '操作失败，请再尝试！'})
             if (window.location.href.indexOf('dev') > -1) {
               window.alert(JSON.stringify(res))
             }

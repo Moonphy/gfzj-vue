@@ -47,11 +47,15 @@
     <header class="header"  v-if="bodycs === 'index-page'">
       <h1><img src="assets/img/title.png" alt="title"></h1>
     </header>
+    <header class="header"  v-if="bodycs === 'home-page'">
+      <h1>个人中心</h1>
+    </header>
     <header class="header"  v-if="bodycs === 'album-page'">
       <h1>编辑推荐</h1>
     </header>
-    <header class="header"  v-if="bodycs === 'home-page'">
-      <h1>个人中心</h1>
+    <header class="header"  v-if="bodycs === 'newssetting-page'">
+      <a href="" @click.prevent="goback()" class="icon icon-return"></a>
+      <h1>消息提醒</h1>
     </header>
     <header class="header"  v-if="bodycs === 'detail-page'">
       <a href="" @click.prevent="goback()" class="icon icon-return"></a>

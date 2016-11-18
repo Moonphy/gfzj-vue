@@ -10,14 +10,14 @@
         <p>{{item.category_name}}</p>
       </a>
     </div>
-    <div class="ranking-list">
+<!--     <div class="ranking-list">
       <img src="../assets/img/list-title-hot.png">
       <Slide :items="experts"></Slide>
     </div>
     <div class="ranking-list">
       <img src="../assets/img/list-title-new.png">
       <Slide :items="newexperts"></Slide>
-    </div>
+    </div> -->
     <div class="audio-list">
       <div class="list-title">
         <span class="font-pink ml20">专家方法</span>

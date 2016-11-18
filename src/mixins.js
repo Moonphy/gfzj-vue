@@ -380,7 +380,7 @@ export var globalMixins = {
         this.setState(false)
       })
     },
-    getUser (title, imgUrl) {
+    getUser (title, imgUrl, fn) {
       var share = function () {
         var shareData = {
           imgUrl: this.user.avatar
@@ -394,6 +394,7 @@ export var globalMixins = {
         if ((new Date()).getTime() - this.userinfo.time < 300000) {
           this.user = this.userinfo.user
           share.call(this)
+          fn && fn(this.user)
           return
         }
       }
@@ -404,6 +405,7 @@ export var globalMixins = {
           time: (new Date()).getTime(),
           user: this.user
         })
+        fn && fn(this.user)
         share.call(this)
         this.setState(false)
       })

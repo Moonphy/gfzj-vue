@@ -69,9 +69,12 @@
     },
     methods: {
       toreplyed (item) {
-        this.$route.router.go({path: '/replyed?id=' + item.question_id})
+        if (item.answer_id) {
+          this.$route.router.go({path: '/replyed?id=' + item.question_id})
+        }
       },
       qplay (item, index) {
+        if (this.isOpenByWeixin('「微信扫一扫，继续下一步」') === false) return
         var self = this
         var audio
         if (this.listenAudio === false) {
@@ -106,6 +109,24 @@
             setTimeout(() => { audio.play() }, 500)
           }
         })
+      },
+      showPageErweima (url, msg) {
+        url = 'http://qr.liantu.com/api.php?text=' + encodeURIComponent(url || window.location.href)
+        msg = msg || '长按图片，保存到相册。'
+        this.$dispatch('wxError', {
+          wxpopup: true,
+          wxpopupText: msg + '<br><img src="' + url + '" alt="二维码">'
+        })
+      },
+      isOpenByWeixin (msg) {
+        var ua = navigator.userAgent.toLowerCase().match(/MicroMessenger/i)
+        var weixin = false
+        if (ua && ua.length && ua[0] === 'micromessenger') {
+          weixin = true
+        } else {
+          this.showPageErweima('', msg)
+        }
+        return weixin
       }
     }
   }

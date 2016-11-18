@@ -20,7 +20,7 @@
                 <span class="q-line-2"></span>
                 <span class="q-line-3"></span>
                 <time>{{question.record_time}}"</time>
-                <div class="ui-label ui-label-green" v-if="question.belong === 0">{{item.record_pay || 1}}偷偷听</div>
+                <div class="ui-label ui-label-green" v-if="question.belong === 0">1元偷偷听</div>
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
           </div>
           <div class="author-detail">
             <strong class="mr10">{{question.specialist_name}}</strong>
-            <span v-if="question.specialist_signature" class="ui-label ui-label-pink">{{question.specialist_signature | cutString 10}}</span>
-            <p>{{question.specialist_introduction}}</p>
+<!--             <span v-if="question.specialist_signature" class="ui-label ui-label-pink">{{question.specialist_signature | cutString 10}}</span> -->
+            <p>{{question.specialist_signature}}</p>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
   import api from '../api/api'
   import List from '../components/List.vue'
   export default {
-    name: 'reply',
+    name: 'replyed',
     mixins: [globalMixins],
     components: {
       List
@@ -150,10 +150,18 @@
           this.setPullLoad(false)
           if (res.errno === 0) {
             this.question = res.rsm
+            if (this.question.specialist_name) { // 有回复时才输出回复的分享内容
+              this.setShareData({
+                title: this.question.specialist_name + '回复了' + this.question.topic_name,
+                desc: '高分专家 | 听专家讲家庭教育',
+                imgUrl: this.question.specialist_avatar_file
+              })
+            }
           }
         })
       },
       pay () {
+        if (this.isOpenByWeixin('「微信扫一扫，继续下一步」') === false) return
         var self = this
         if (this.voiceAudio === '') {
           this.voiceAudio = document.getElementById('reply_1')
