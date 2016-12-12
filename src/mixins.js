@@ -368,8 +368,9 @@ export var globalMixins = {
           fn && fn(res.rsm)
         } else if (res.errno === -100) {
           try {
+            var uri = window.location.href.replace('&paying=1', '')
             window.location.href = this.pinjieUrl(res.rsm.pay_link, {
-              callback: encodeURIComponent(window.location.href)
+              callback: encodeURIComponent(uri)
             })
           } catch (e) {
 

@@ -5,6 +5,7 @@ class AudioCtrl {
     // if (!opt.id) {
     //   return
     // }
+    // console.log(opt)
     this.audioArea = this.$(opt.audioArea)
     this.audioRun = this.$(opt.audioRun)
     this.audioSpot = this.$(opt.audioSpot)
@@ -78,9 +79,9 @@ class AudioCtrl {
 
     this.audioSpot.addEventListener('touchend', function (e) {
       if (self.data.playing === true) {
-        self.audioPlayer.pause()
-        self.audioPlayer.progress(progress)
-        self.audioPlayer.play()
+        // self.audioPlayer.pause()
+        self.audioPlayer.progress(self.audioPlayer.audio.currentTime)
+        // self.audioPlayer.play()
       }
     }, false)
 
@@ -101,6 +102,7 @@ class AudioCtrl {
   }
 
   setProgress (movePercent) {
+    // progress = movePercent
     // console.log(movePercent)
     this.audioRun.style.width = movePercent + '%'
     // this.audioSpot.style.left = movePercent + '%'

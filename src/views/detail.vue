@@ -20,7 +20,7 @@
         <div id="totalTime">{{allTime|voiceTime}}</div>
       </div>
       <!-- 进度条-->
-      <div id="audio-time-bar" class="audio-time-bar" v-tap="vtap($event)">
+      <div id="audio-time-bar" class="audio-time-bar" @click="vtap($event)">
         <div class="w10"></div>
         <div id="progress-bar" class="progress-bar"><span id="bar-point"></span></div>
         <div id="load-present-bar "></div>
@@ -150,9 +150,8 @@
           topic_id: '', // 方法id
           topic_name: '', // 音频标题
           topic_description: '', // 音频简介
-          topic_cover_url: '', // 音频封面地址
-          // topic_voice_url: 'http://dev.phpmvc.com/5.mp3', // 音频地址
-          topic_voice_url: '',
+          // topic_cover_url: '', // 音频封面地址
+          topic_voice_url: '', // 音频地址
           specialist_name: '', // 专家名
           specialist_uid: '', // 专家uid
           question_fee: '', // 问题费用
@@ -351,7 +350,7 @@
       },
       vtap (evt) {
         if (this.playing === false) return
-        let touch = evt[0].changedTouches[0]
+        let touch = evt
         let pw = document.getElementById('audio-time-bar').offsetWidth
         let progress = Math.floor((touch.pageX / pw) * 100)
         this.playCtrlObj.setProgress(progress)

@@ -35,6 +35,7 @@
     },
     ready () {
       this.getIndexList()
+      console.log(this.$route.router.stringifyPath({path: '/publish'}))
     },
     methods: {
       getIndexList (page) {

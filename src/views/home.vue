@@ -6,16 +6,16 @@
       <div class="ui-avatar fl" v-if="user.avatar">
         <img :src="user.avatar">
       </div>
-      <div class="home-avatar-right fr" v-show="user.type===1">
+      <div class="home-avatar-right fr">
         <a class="btn-edit hidden" v-link="{path:'/edit'}">
           <i class="icon icon-edit"></i>
           <div class="font-grey">编辑</div>
         </a>
         <a class="btn-edit" v-link="{path:settingUrl}" v-if="settingUrl">
           <i class="icon icon-attention"></i>
-          <div class="font-grey">设置</div>
+          <div class="font-grey">提醒</div>
         </a>
-        <a class="btn-edit" v-link="{path:'/erweima'}">
+        <a class="btn-edit" v-link="{path:'/erweima'}" v-if="user.type===1">
           <i class="icon icon-erweima"></i>
           <div class="font-grey">二维码</div>
         </a>
@@ -293,7 +293,7 @@
         expertshow: false,
         currentUrl: '',
         user: {},
-        tab: 1,
+        tab: 2,
         isTips: false, // 我的消息小红点
         EPage: 1, // 专家动态列表页码
         LPage: 1, // 我的收听列表页码
@@ -329,12 +329,17 @@
       this.getUser('', '', (info) => {
         // 获取用户是否已经关注豆计划
         if (info.subscribe === 0) {
-          self.settingUrl = '/attention'
+          self.settingUrl = '/attention' // 关注豆计划
         } else {
-          self.settingUrl = '/newssetting' // 关注豆计划
+          self.settingUrl = '/newssetting'
         }
       })
-      this.getEList(1, 1)
+
+      if (window.location.href.indexOf('tab=2') > -1) {
+        this.getNList()
+      } else {
+        this.getEList(1, 1)
+      }
 
       this.initPage({
         getPage: () => {

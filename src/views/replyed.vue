@@ -1,6 +1,7 @@
 <template>
   <div class="replyed-page">
     <div class="bg-white pb10">
+      <audio :src="currentUrl" class="q-player" id="reply_1" ></audio>
       <div class="q-item borer-b album-item" v-if="question.user_name">
         <div class="ui-avatar fl">
           <img :src="question.avatar_file" alt="alt">
@@ -13,7 +14,6 @@
               <img :src="question.specialist_avatar_file" alt=""/>
             </div>
             <div class="q-audio-wrap">
-              <audio :src="currentUrl" class="q-player" id="reply_1" ></audio>
               <div class="triangle-left"></div>
               <div @click="pay()" :class="['q-audio', playing?'q-play':'']">
                 <span class="q-line-1"></span>
@@ -150,6 +150,9 @@
           this.setPullLoad(false)
           if (res.errno === 0) {
             this.question = res.rsm
+            if (this.$route.query.paying === '1') { // 收听支付
+              this.pay()
+            }
             if (this.question.specialist_name) { // 有回复时才输出回复的分享内容
               this.setShareData({
                 title: this.question.specialist_name + '回复了' + this.question.topic_name,

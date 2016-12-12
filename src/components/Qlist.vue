@@ -75,6 +75,10 @@
       },
       qplay (item, index) {
         if (this.isOpenByWeixin('「微信扫一扫，继续下一步」') === false) return
+        if (item.belong === 0) {
+          this.$route.router.go({path: '/replyed?id=' + item.question_id + ' &paying=1'})
+          return
+        }
         var self = this
         var audio
         if (this.listenAudio === false) {
